@@ -38,7 +38,7 @@
                 <a href="<?php echo get_post_type_archive_link('doctor'); ?>"><b>All Doctors</b></a>
             </div>
         </li>
-        <li><a href="#">Services</a></li>
+        <li><a href="<?php echo site_url('/services'); ?>">Services</a></li>
         <li><a href="<?php echo get_post_type_archive_link('doctor'); ?>" class="btn-appointment">Book Now</a></li>
     </ul>
 </header>
