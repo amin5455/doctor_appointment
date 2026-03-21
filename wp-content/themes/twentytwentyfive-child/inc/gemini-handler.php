@@ -2,7 +2,7 @@
 // Gemini API Handler
 function get_gemini_suggestion($user_message) {
     // 1. Model update (Flash fast hai aur medical suggestions ke liye best hai)
-    $api_key = 'AIzaSyAXxZ4Ys5jMvIHrqTHgHmQ2MKNrYz-xvnY'; 
+    $api_key = 'your api key'; 
     $url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' . $api_key;
 
     // Doctors ki list fetch karna
