@@ -50,8 +50,20 @@
                 </div>
             </div>
         </div>
-
-        <aside>
+<aside>
+        <div id="booking-section" style="background: #f8fafc; padding: 20px; border-radius: 12px; margin-top: 20px;">
+    <h4 style="margin-bottom: 15px;">Book an Appointment</h4>
+    <form id="doctor-booking-form">
+        <input type="text" name="p_name" placeholder="Your Name" required style="width:100%; padding:10px; margin-bottom:10px; border-radius:5px; border:1px solid #ddd;">
+        <input type="date" name="app_date" required style="width:100%; padding:10px; margin-bottom:10px; border-radius:5px; border:1px solid #ddd;">
+        <input type="hidden" name="doctor_id" value="<?php echo get_the_ID(); ?>">
+        <button type="submit" style="width: 100%; background: #2563eb; color: white; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">
+            Confirm Booking
+        </button>
+    </form>
+    <div id="booking-message" style="margin-top:10px; font-weight:bold;"></div>
+</div>
+        
             <div style="background: white; padding: 30px; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); position: sticky; top: 100px;">
                 <h3 style="margin-top: 0; color: #1e293b; margin-bottom: 25px;">Book Appointment</h3>
                 
@@ -78,3 +90,40 @@
 <?php endwhile; ?>
 
 <?php get_footer(); ?>
+
+<script>
+(function($) {
+    $(document).ready(function() {
+        $('#doctor-booking-form').on('submit', function(e) {
+            e.preventDefault();
+            
+            let $form = $(this);
+            let $messageDiv = $('#booking-message');
+            let formData = $form.serialize();
+
+            // Button ko disable karein taake double click na ho
+            $form.find('button').prop('disabled', true).text('Booking...');
+
+            $.ajax({
+                url: '<?php echo admin_url('admin-ajax.php'); ?>',
+                type: 'POST',
+                data: formData + '&action=book_appointment',
+                success: function(response) {
+                    if(response.success) {
+                        $messageDiv.html('<p style="color:green; padding:10px; background:#f0fdf4; border-radius:5px;">✅ ' + response.data + '</p>');
+                        $form[0].reset();
+                    } else {
+                        $messageDiv.html('<p style="color:red;"> Error! Please try again.</p>');
+                    }
+                },
+                error: function() {
+                    $messageDiv.html('<p style="color:red;"> Server error. Check connection.</p>');
+                },
+                complete: function() {
+                    $form.find('button').prop('disabled', false).text('Confirm Booking');
+                }
+            });
+        });
+    });
+})(jQuery);
+</script>

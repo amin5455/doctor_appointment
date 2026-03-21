@@ -61,7 +61,7 @@
                 border-radius: 12px;
                 box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
             ">
-                <input type="text" name="s" placeholder="Search doctor by name..." style="
+                <input type="text" name="s" placeholder="Search doctor by name..." value="<?php echo get_search_query(); ?>" style="
                     flex: 1;
                     border: none;
                     padding: 12px 20px;
@@ -159,7 +159,7 @@
             <?php
             $home_docs = new WP_Query(array(
                 'post_type' => 'doctor',
-                'posts_per_page' => 4,
+                'posts_per_page' => 6,
                 'orderby' => 'rand'
             ));
 
